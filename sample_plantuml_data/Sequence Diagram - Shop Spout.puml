@@ -24,8 +24,10 @@ app->svc:POST (Google.js:9:axios)\n/v1/google-login\n{Google_ID_Token}
 activate svc
 svc->svc:Check if User profile\nexists in Shopspout DB
 alt User profile exists in Shopspout DB
+group test group here
 svc->app:{App_Token, User ID, Email, Name, Role}
 app->app:Render User Page (based on role),\nSave in Localstorage
+end
 app->usr:User Page
 else User profile not in Shopspout DB
 svc->svc:Create new user with dummy pwd,\nstore in Shopspout DB
