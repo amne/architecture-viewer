@@ -1,0 +1,64 @@
+@startuml
+
+title "Sample 01"
+
+hide footbox
+autonumber "[0] "
+
+actor "User" as User << (U, #ccebc5) user >>
+participant Webhook << (H, #e3e388) repo >>
+participant "MyClientApp" as Client << (A, #ccebc5) user >>
+participant "Orchestrator" as Orch << (C, #b3cde3) app >>
+participant ASM << (B, #e3bdb3) backend >>
+participant TSA << (B, #e3bdb3) backend >>
+participant SCM << (B, #e3bdb3) backend >>
+participant KB << (B, #e3bdb3) backend >>
+note over Client
+  test the properties
+  of this utility
+  many new lines and line break does not work
+  line 1 line 1b
+  line 2 line 2b\n
+  line 3
+  line 4 line 4b line 4c
+  with new lines and <i>html</i> <b>tags</b>.
+end note
+note over Orch
+  useful information http://www.google.com for Orchestration.
+end note
+
+==Frontend==
+
+User -> Client: user logs in
+Client -> Client: test 000
+loop 5 times
+	Client -> Orch: notify user
+	note right
+      some desc on this loop 
+	end note
+	Orch --> Client: ack
+end
+
+==Repo==
+
+Webhook -> Orch: push event
+
+==Orchestration==
+
+Client -> Orch: test 111
+note left
+  some notes description here 
+end note
+Orch --> Client: ack
+
+==Backend==
+
+Orch -> ASM: test 222
+ASM --> Orch: return 222
+Orch -> TSA: test 333
+TSA --> Orch: return 333
+Orch -> SCM: test 444
+SCM --> Orch: return 444
+Orch -> KB: test 555
+KB --> Orch: return 555
+@enduml
