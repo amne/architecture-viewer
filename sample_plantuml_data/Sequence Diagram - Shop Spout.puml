@@ -1,0 +1,37 @@
+@startuml
+autonumber
+Actor "Shopspout User" as usr
+Participant "Shopspout Web app" as app
+Participant "Shopspout API Svc" as svc
+Participant "Google IAM" as iam
+usr->app:Click "Sign In"
+app->usr:Sign In Page
+app->iam:Handshaking REQ\n{Google Client ID}
+Activate iam
+Note Left:User is on Signin Page\nSignin.js and Google.js \nform components rendered
+iam->app:handshaking res
+usr->app:Click \n"Continue with Google"
+Activate app
+app->iam:GET\n/o/oauth2/auth\n{Google Client ID, Callback URL,\nScope=emailprofile}
+iam->app:Google Login Form
+app->usr:Goggle Login Form\n(Choose Account)
+usr->app:Google Login Credentials
+app->iam:POST\n/accounts.google.com/_/signin\n{Client ID, Scope}
+note right:using React's GoogleLogin,\nwith response type=id_token,\n(which returns Google ID Token only).\nOther response types are "code" for Auth Code,\n"token" for Access Token
+iam->app:{Google_ID_Token}
+deactivate iam
+app->svc:POST (Google.js:9:axios)\n/v1/google-login\n{Google_ID_Token}
+activate svc
+svc->svc:Check if User profile\nexists in Shopspout DB
+alt User profile exists in Shopspout DB
+svc->app:{App_Token, User ID, Email, Name, Role}
+app->app:Render User Page (based on role),\nSave in Localstorage
+app->usr:User Page
+else User profile not in Shopspout DB
+svc->svc:Create new user with dummy pwd,\nstore in Shopspout DB
+svc->app:{App_Token, User ID, Email, Name, Role},\nSave in Localstorage
+app->app:Render User Page (based on role)
+app->usr:User Page
+deactivate app
+end
+@enduml
