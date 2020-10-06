@@ -31,7 +31,9 @@ else User profile not in Shopspout DB
 svc->svc:Create new user with dummy pwd,\nstore in Shopspout DB
 svc->app:{App_Token, User ID, Email, Name, Role},\nSave in Localstorage
 app->app:Render User Page (based on role)
+loop 5 times
 app->usr:User Page
+end
 deactivate app
 end
 @enduml
