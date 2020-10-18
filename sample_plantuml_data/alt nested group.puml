@@ -1,7 +1,6 @@
 @startuml
 participant Alice
 participant Bob
-==Frontend==
 Alice -> Bob: Authentication Request
 alt successful case
 Bob -> Alice: Authentication Accepted
@@ -18,7 +17,9 @@ end
 end
 Alice -> Log : Log attack end
 end
+== divider ==
 else Another type of failure
 Bob -> Alice: Please repeat
+note left: note
 end
 @enduml
