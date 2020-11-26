@@ -1,20 +1,15 @@
-{
-  "json": ["rigid", "better for data interchange"],
-  "yaml": ["slim and flexible", "better for configuration"],
-  "object": {
-    "key": "value",
-    "array": [
-      {
-        "null_value": null
+    {
+      "title": "Swagger Sample App",
+      "description": "This is a sample server Petstore server.",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "name": "API Support",
+        "url": "http://www.swagger.io/support",
+        "email": "support@swagger.io"
       },
-      {
-        "boolean": true
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
       },
-      {
-        "integer": 1
-      }
-    ]
-  },
-  "paragraph": "Blank lines denotenparagraph breaksn",
-  "content": "Or wencan autonconvert line breaksnto save space"
-}
+      "version": "1.0.1"
+    }
