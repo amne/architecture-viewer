@@ -1,0 +1,81 @@
+swagger: '2.0'
+info:
+  title: new version of bubble tea shop authentication API
+  description: An authentication API for bubble tea shop. 
+  version: v1.0.0
+host: api.rackstacks.io:18043
+basePath: /
+schemes:
+  - https
+paths:
+  '/v1/signin':
+    post:
+      tags:
+        - auth
+      summary: request authentication token
+      description: get authentication token by post username and password
+      operationId: BubbleTeaShopV1-getAuth
+      parameters:
+        - in: body
+          name: body
+          description: 'AuthJsonV1 object that needs to be added'
+          required: true
+          schema:
+            $ref: '#/definitions/AuthJsonV1'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/AuthResponseJsonV1'
+        '422':
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponseJsonV1'   
+definitions: 
+  AuthJsonV1:
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        example: GENODEM1GLS
+      password:
+        type: string
+        example: 8ca8a7e4-6d02-40e3-a129-0b2bf89de9f0       
+  AuthResponseJsonV1:
+    required:
+      - token
+      - user
+    properties:
+      token:
+        type: string
+        example: 'ueka8qwre.89asdmb7e.asdfljao31'
+      user:
+        $ref: '#/definitions/UserInfo'
+  UserInfo:
+    required:
+      - _id
+      - name
+      - email
+      - role
+    properties:
+      _id:
+        type: string
+        example: '5efeed8801ca974e9c89e287'
+      name:
+        type: string
+        example: 'LilyWong'
+      email:
+        type: string
+        example: 'lily@abc.com'
+      role:
+        type: string
+        example: 'admin'
+  ErrorResponseJsonV1:
+    required:
+      - error
+    properties:
+      token:
+        type: string
+        example: 'there is an error'

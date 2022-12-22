@@ -1,0 +1,53 @@
+@startuml
+
+title TM Sample 
+actor webhook
+participant orchestrator order 20
+participant asm order 30
+participant tsa order 40
+participant scm order 50
+participant kb order 60
+autonumber
+webhook->orchestrator: repo change (push event):\nfeature file seq.diag. oas update
+orchestrator->tsa: update misuse case
+activate tsa #FFBBBB
+tsa->orchestrator: retrieve feature file seq.diag.
+activate orchestrator
+orchestrator->asm: retrieve feature file seq.diag.
+activate orchestrator
+asm-->orchestrator: feature file seq.diag.
+activate orchestrator
+orchestrator->tsa: feature file seq.diag.
+activate tsa #e9967a
+tsa->tsa: parse feature file seq.diag.
+tsa->orchestrator: get generic misuse cases
+deactivate orchestrator
+orchestrator->kb: get generic misuse cases
+deactivate orchestrator
+activate tsa #005500
+kb->orchestrator: generic misuse cases
+deactivate orchestrator
+orchestrator->tsa: generic misuse cases
+tsa->tsa: populate specific misuse cases
+ deactivate tsa 
+tsa->orchestrator: IDs of generated misuse cases
+deactivate tsa
+orchestrator->scm: update security controls
+activate scm
+scm->orchestrator: retrieve misuse cases
+orchestrator->scm: IDs of misuse cases
+deactivate tsa 
+scm->orchestrator: retrieve misuse case - security control mappings
+orchestrator->kb: retrieve misuse case - security control mappings
+kb->orchestrator: misuse case - security control mappings
+orchestrator->scm: misuse case - security control mappings
+scm->orchestrator: retrieve OAS/ seq.diag. matrix
+orchestrator->asm: retrieve OAS/ seq.diag. matrix
+asm->orchestrator: OAS / seq.diag. matrix
+orchestrator->scm: OAS / seq.diag. matrix
+scm->scm: populate specific security controls
+scm->orchestrator: IDs of security controls
+orchestrator->scm: run test cases / validate
+scm-->orchestrator: validation completion
+deactivate scm
+@enduml
